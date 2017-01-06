@@ -1,0 +1,149 @@
+Day 1:
+Baseline
+Training Accuracy -- 93% (epochs = 10)
+Test Accuracy -- 84%
+
+Data Augumentation to make input data distribution uniform:
+Training Accuracy -- 96% (epochs = 10)
+Test Accuracy -- 90%
+
+Day 2:
+Things to try tomorrow
+(a) Normalization
+(b) Dropout (during training=0.5, during testing =1)
+(c) Regularization
+
+Added dropout on the last/final layer
+Training Accuracy :91.7% (epochs = 20)
+Test Accuracy: 90.8%
+
+Added dropout on the last two layers
+Training Accuracy: 92.2% (epochs = 20), Need more epochs
+Test Accuracy: 91.2%
+
+Backto nodropout, histogramequalization on training data
+Training Accuracy: 90.2% (epochs = 20), Need more epochs
+Test Accuracy: 88.6%
+
+Increased Filter Size
+Training Accuracy = 97.6% (epochs = 20)
+Test Accuracy: 92.5%
+
+Increased Filter Size + Dropout
+Training Accuracy = 97.7% (epochs = 20)
+Test Accuracy = 94.7%
+Lesson Learnt: Dropout acts as regularization and let's us follow training accuracy closely. 
+Add more dropout layers to track validation accuracy closely
+Need to increase model to improve training accuracy
+
+Increased Filter Size + Grayscale Normalization
+Training Accuracy = 96.9%
+Test Accuracy = 93%
+
+Increased Filter Size + Grayscale Normalization
+Training Accuracy = 96.9%
+Test Accuracy = 93%
+
+Increased FC Layers Size (2048 -> 1024 -> 256 ->43)
+Training Accuracy = 97.1%
+Test Accuracy = 90.1%
+As the model size increase we see overfitting, thus deviation ebtween valid and test accuracy
+
+Modified Validation before augumentation+ Increased FC Layers Size (2048 -> 1024 -> 256 ->43)
+Training Accuracy = 98.8%
+Test Accuracy = 89.7%
+As the model size increase we see overfitting, thus deviation between valid and test accuracy
+
+Lessons learned:
+- split data before augumenting
+- Adding 0.01 to relu so that it converges faster
+- Added Cross Entropy Loss plots
+
+
+Try learning rate decay and regularization tomorrow
+- The reason I got stuck with validation at 97% because I split validation set after augumentation
+Once I split data before data augumentation, validation accuracy went to 99%
+- When splitting data make sure that you select stratified option, in this way you get some % of data from all
+labels and thus training model gets chance to see all the data. Else, sparse labelled data might not be picked up
+- Add relu(input = 0.01), this made data converge faster
+- Should we use dropout on conv layers?
+http://arxiv.org/pdf/1506.02158v6.pdf
+"The additional gain in performance obtained by adding dropout in the convolutional layers (3.02% to 2.55%) is worth noting. One may have presumed that since the convolutional layers don’t have a lot of parameters, overfitting is not a problem and therefore dropout would not have much effect. However, dropout in the lower layers still helps because it provides noisy inputs for the higher fully connected layers which prevents them from overfitting."
+They use 0.7 prob for conv drop out and 0.5 for fully connected.
+
+- Learning Rate decay
+- Augumentation decay
+- Regularization
+- Dropout
+
+Added Regularization, No dropout (EPOCH =40), beta = 0.001
+Training Accuracy = 99%
+Test Accuracy = 94.4%
+
+Added Regularization, dropout (EPOCH =40), beta = 0.001
+Training Accuracy = 99%
+Test Accuracy = 94.5%
+
+dropout (EPOCH =40), Regularization beta = 0.01
+Training Accuracy = 94%
+Test Accuracy = 89%
+
+dropout (EPOCH =40), Regularization beta = 0.005
+Training Accuracy = 97%
+Test Accuracy = 91.2%
+
+dropout (EPOCH =20), Regularization beta = 0.003
+Training Accuracy = 97.5%
+Test Accuracy = 92.7%
+
+dropout only (EPOCH =40), No Regularization, dkp =0.5
+Training Accuracy = 98.1%
+Test Accuracy = 93.7%
+
+dropout only (EPOCH =40), No Regularization, fc_dkp =0.5, conv_dkp=0.5
+Training Accuracy = 97.8%
+Test Accuracy = 92.1%
+
+dropout only (EPOCH =40), No Regularization, fc_dkp =0.7, conv_dkp=0.5
+Training Accuracy = 97.8%
+Test Accuracy = 93.7%
+
+dropout only (EPOCH =20), Regularization beta =0.001, fc_dkp =1, conv_dkp=1
+Training Accuracy = 98.8%
+Test Accuracy = 93.1%
+
+dropout only (EPOCH =40), Regularization beta =0.001, fc_dkp =1, conv_dkp=1
+Training Accuracy = 99%
+Test Accuracy = 92.5%
+
+dropout only (EPOCH =40), Regularization beta =0.0005, fc_dkp =0.5, conv_dkp=0.7
+Training Accuracy = 99%
+Test Accuracy = 94.5%
+
+dropout only (EPOCH =40), Regularization beta =0.0001, fc_dkp =0.5, conv_dkp=0.7
+Training Accuracy = 99%
+Test Accuracy = 93.6%
+
+dropout only (EPOCH =40), Regularization beta =0.0003, fc_dkp =0.5, conv_dkp=0.7 , normalize to -0.5,0.5
+Training Accuracy = 99%
+Test Accuracy = 93.3%
+
+dropout only (EPOCH =40), Regularization beta =0.0003, fc_dkp =0.5, conv_dkp=0.7 , normalize to -0.5,0.5, No augumentation
+Training Accuracy = 99%
+Test Accuracy = 94.7%
+
+dropout only (EPOCH =40), Regularization beta =0.0003, fc_dkp =0.5, conv_dkp=0.7 , normalize to -0.5,0.5, No augumentation
+Training Accuracy = 99%
+Test Accuracy = 95%,96%
+
+This shows that the data augumentation actually suffers the test accuracy
+
+Things to add:
+- Normalize between -0.5 and 0.5 [Done]
+- Learning rate decay
+- Brightness Normalization/Batch Normalization
+- Should we shuffle before each epoch [Done]
+- Reduce augumentation over time
+- Increase FC Layer sizes
+- Increase filter sizes
+
